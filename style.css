@@ -1,0 +1,122 @@
+/* Общий стиль */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    --x: 50%; /* Переменные для положения круга */
+    --y: 50%;
+}
+
+/* Размытый фон */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('your-image.jpg') no-repeat center center/cover; /* Замените на ваш фон */
+    z-index: -2; /* Размещается позади контента */
+    filter: blur(10px); /* Размытие всего фона */
+}
+
+/* Чистая область */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('your-image.jpg') no-repeat center center/cover; /* Тот же фон без размытия */
+    z-index: -1; /* Поверх размытого слоя */
+    clip-path: circle(100px at var(--x) var(--y)); /* Круг вокруг курсора */
+    pointer-events: none; /* Элемент не мешает взаимодействию с контентом */
+    transition: clip-path 0.1s ease-out; /* Плавное обновление положения */
+}
+
+
+/* Хедер */
+header {
+    background-color: rgba(76, 175, 80, 0.9); /* Полупрозрачный фон */
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+
+/* Подвал */
+footer {
+    background-color: rgba(76, 175, 80, 0.9); /* Полупрозрачный фон */
+    color: white;
+    text-align: center;
+    padding: 1em;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1; /* Поверх фона */
+}
+
+/* Контейнер для картинок */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   /* Всего 3 колонки */
+    gap: 24px;                                /* Увеличено расстояние между картинками */
+    padding: 16px;
+    justify-items: center;   /* Центрирование изображений по горизонтали */
+    width: 80%;               /* Уменьшаем ширину галереи до 80% от ширины экрана */
+    max-width: 1200px;        /* Максимальная ширина галереи 1200px */
+    margin: 0 auto;           /* Центрируем галерею */
+}
+
+/* Стиль для картинок */
+.gallery img {
+    width: 100%;              
+    aspect-ratio: 1 / 1;      
+    object-fit: cover;        
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, filter 0.3s ease;
+    max-width: 400px;         
+    max-height: 400px;        
+    position: relative; /* Чтобы потом использовать псевдоэлементы */
+}
+
+.gallery img:hover {
+    transform: rotate(5deg); /* Легкий поворот изображения */
+}
+
+/* Индивидуальные эффекты для картинок */
+.gallery img:nth-child(1):hover {
+    filter: hue-rotate(90deg); /* Эффект изменения оттенка на 90 градусов */
+}
+
+.gallery img:nth-child(2):hover {
+    filter: blur(4px); /* Эффект размытия */
+}
+
+.gallery img:nth-child(3):hover {
+    filter: brightness(1.2); /* Увеличение яркости */
+}
+
+.gallery img:nth-child(4):hover {
+    filter: grayscale(100%);
+}
+
+.gallery img:nth-child(5):hover {
+    transform: rotate(5deg) scale(1.1);
+}
+
+/* Медиа-запрос для узких экранов */
+@media (max-width: 900px) {
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);  /* 2 колонки для узких экранов */
+    }
+}
+
+/* Медиа-запрос для еще более узких экранов */
+@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: 1fr;  /* 1 колонка для очень узких экранов */
+    }
+}
